@@ -9,7 +9,7 @@
 #include <cstdlib> // For exit()
 using namespace std;
 
-class GraphVisualizer {
+class GraphTraversalVisualizer {
 private:
     // Adjacency list representation of the graph
     map<int, map<int, int> > adjList; // node -> {neighbor -> weight}
