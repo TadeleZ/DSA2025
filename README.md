@@ -1,6 +1,6 @@
-  Comprehensive Documentation for WeightedGraph Implementation
+   Documentation for Graph travrsal visualizer Implementation
 
-This C++ program implements a **WeightedGraph** class to represent and manipulate a weighted directed graph. The graph is stored using an adjacency list, where each node maps to its neighbors and the corresponding edge weights. The program provides a menu-driven interface for interacting with the graph, allowing users to add nodes, edges, delete nodes, update edge weights, perform traversals (Breadth-First Search and Depth-First Search), find the shortest path using Dijkstra's algorithm, and print the graph.
+This C++ program implements a **GraphTraversalVisualizer** class to represent and manipulate a weighted directed graph. The graph is stored using an adjacency list, where each node maps to its neighbors and the corresponding edge weights. The program provides a menu-driven interface for interacting with the graph, allowing users to add nodes, edges, delete nodes, update edge weights, perform traversals (Breadth-First Search and Depth-First Search), find the shortest path using Dijkstra's algorithm, and print the graph.
 
 The implementation is designed to be modular, extensible, and user-friendly, making it suitable for educational purposes or as a foundation for more complex graph algorithms. Below is a detailed breakdown of the program's structure, functionality, and usage.
 
