@@ -210,7 +210,7 @@ public:
 };
 
 int main() {
-    GraphVisualizer graph;
+    GraphTraversalVisualizer graph;
     int choice, node, src, dest, weight;
 
     while (true) {
