@@ -125,8 +125,8 @@ public:
         cout << endl;
     }
 
-// Dijkstra's Algorithm to find the shortest path
-    void showShortestPath(int startNode, int endNode) {
+    // Dijkstra's Algorithm to find the shortest path
+    void dijkstraShortestPath(int startNode, int endNode) {
         if (adjList.find(startNode) == adjList.end() || adjList.find(endNode) == adjList.end()) {
             cout << "Start or end node does not exist.\n";
             return;
@@ -171,7 +171,6 @@ public:
                 }
             }
         }
-
         // Reconstruct the shortest path
         if (distances[endNode] == numeric_limits<int>::max()) {
             cout << "No path exists from " << startNode << " to " << endNode << ".\n";
