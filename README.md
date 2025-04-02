@@ -5,8 +5,7 @@ This C++ program implements a **GraphTraversalVisualizer** class to represent an
 The implementation is designed to be modular, extensible, and user-friendly, making it suitable for educational purposes or as a foundation for more complex graph algorithms. Below is a detailed breakdown of the program's structure, functionality, and usage.
 
 ---
-
-### Key Features of the Code:
+  Key Features of the Code:
 
 1. **Graph Representation**:
    - The graph is represented as a `map<int, map<int, int>>` where:
@@ -33,9 +32,9 @@ The implementation is designed to be modular, extensible, and user-friendly, mak
 
 ---
 
-### Class Methods:
+ Class Methods:
 
-#### 1. **`addNode(int node)`**
+ 1. **`addNode(int node)`**
    - **Purpose**: Adds a new node to the graph.
    - **Behavior**:
      - Checks if the node already exists in the graph.
@@ -50,7 +49,7 @@ The implementation is designed to be modular, extensible, and user-friendly, mak
      Node X already exists.
      ```
 
-#### 2. **`deleteNode(int node)`**
+### 2. **`deleteNode(int node)`**
    - **Purpose**: Deletes a node and all edges connected to it from the graph.
    - **Behavior**:
      - Checks if the node exists in the graph.
@@ -65,7 +64,7 @@ The implementation is designed to be modular, extensible, and user-friendly, mak
      Node X does not exist.
      ```
 
-#### 3. **`addEdge(int src, int dest, int weight)`**
+### 3. **`addEdge(int src, int dest, int weight)`**
    - **Purpose**: Adds a directed edge between two nodes with a specified weight.
    - **Behavior**:
      - Checks if both the source and destination nodes exist in the graph.
@@ -80,7 +79,7 @@ The implementation is designed to be modular, extensible, and user-friendly, mak
      One or both nodes do not exist.
      ```
 
-#### 4. **`updateWeight(int src, int dest, int newWeight)`**
+### 4. **`updateWeight(int src, int dest, int newWeight)`**
    - **Purpose**: Updates the weight of an existing edge between two nodes.
    - **Behavior**:
      - Checks if the edge between the source and destination nodes exists.
@@ -95,7 +94,7 @@ The implementation is designed to be modular, extensible, and user-friendly, mak
      Edge between X and Y does not exist.
      ```
 
-#### 5. **`bfs(int startNode)`**
+### 5. **`bfs(int startNode)`**
    - **Purpose**: Performs a Breadth-First Search traversal starting from the given node.
    - **Behavior**:
      - Uses a queue to traverse the graph level by level.
@@ -106,7 +105,7 @@ The implementation is designed to be modular, extensible, and user-friendly, mak
      BFS Traversal: X Y Z ...
      ```
 
-#### 6. **`dfs(int startNode)`**
+### 6. **`dfs(int startNode)`**
    - **Purpose**: Performs a Depth-First Search traversal starting from the given node.
    - **Behavior**:
      - Uses a stack to traverse the graph depth-wise.
