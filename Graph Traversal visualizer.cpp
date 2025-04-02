@@ -1,74 +1,81 @@
-
 #include <iostream>
-#include <vector>
 #include <queue>
 #include <stack>
-#include <map>
-#include <algorithm>
-#include <limits>
-#include <cstdlib> // For exit()
+#include <limits.h> // For INT_MAX
 using namespace std;
+
+const int MAX_NODES = 100; // Define a maximum number of nodes
 
 class GraphTraversalVisualizer {
 private:
-    // Adjacency list representation of the graph
-    map<int, map<int, int> > adjList; // node -> {neighbor -> weight}
+    int adjList[MAX_NODES][MAX_NODES]; // Adjacency matrix
+    int weights[MAX_NODES][MAX_NODES];  // Weights of edges
+    bool exists[MAX_NODES];              // To track if a node exists
 
 public:
-    // Add a node to the graph
-    void addNode(int node) {
-        if (adjList.find(node) == adjList.end()) {
-            adjList[node] = map<int, int>();
-            cout << "Node " << node << " added.\n";
-        } else {
-            cout << "Node " << node << " already exists.\n";
+    GraphTraversalVisualizer() {
+        // Initialize the graph
+        for (int i = 0; i < MAX_NODES; ++i) {
+            exists[i] = false;
+            for (int j = 0; j < MAX_NODES; ++j) {
+                adjList[i][j] = -1; // -1 indicates no edge
+                weights[i][j] = 0;  // Initialize weights to 0
+            }
         }
     }
 
-    // Delete a node from the graph
-    void deleteNode(int node) {
-        if (adjList.find(node) != adjList.end()) {
-            // Remove the node from the adjacency list
-            adjList.erase(node);
+    void addNode(int node) {
+        if (node >= 0 && node < MAX_NODES && !exists[node]) {
+            exists[node] = true;
+            cout << "Node " << node << " added.\n";
+        } else {
+            cout << "Node " << node << " already exists or is out of bounds.\n";
+        }
+    }
 
+    void deleteNode(int node) {
+        if (node >= 0 && node < MAX_NODES && exists[node]) {
             // Remove all edges pointing to this node
-            for (map<int, map<int, int> >::iterator it = adjList.begin(); it != adjList.end(); ++it) {
-                it->second.erase(node);
+            for (int i = 0; i < MAX_NODES; ++i) {
+                adjList[i][node] = -1; // Remove edge
             }
+            exists[node] = false;
             cout << "Node " << node << " deleted.\n";
         } else {
             cout << "Node " << node << " does not exist.\n";
         }
     }
 
-    // Add an edge between two nodes with a given weight
     void addEdge(int src, int dest, int weight) {
-        if (adjList.find(src) == adjList.end() || adjList.find(dest) == adjList.end()) {
-            cout << "One or both nodes do not exist.\n";
-            return;
-        }
-        adjList[src][dest] = weight;
-        cout << "Edge added between " << src << " and " << dest << " with weight " << weight << ".\n";
-    }
-
-    // Update the weight of an existing edge
-    void updateWeight(int src, int dest, int newWeight) {
-        if (adjList.find(src) != adjList.end() && adjList[src].find(dest) != adjList[src].end()) {
-            adjList[src][dest] = newWeight;
-            cout << "Weight updated for edge between " << src << " and " << dest << " to " << newWeight << ".\n";
+        if (src >= 0 && src < MAX_NODES && dest >= 0 && dest < MAX_NODES && exists[src] && exists[dest]) {
+            adjList[src][dest] = dest; // Add edge
+            weights[src][dest] = weight; // Set weight
+            cout << "Edge added between " << src << " and " << dest << " with weight " << weight << ".\n";
         } else {
-            cout << "Edge between " << src << " and " << dest << " does not exist.\n";
+            cout << "One or both nodes do not exist.\n";
         }
     }
 
-    // Breadth-First Search (BFS) Traversal
+    void updateWeight(int src, int dest, int newWeight) {
+        if (src >= 0 && src < MAX_NODES && dest >= 0 && dest < MAX_NODES && exists[src] && exists[dest]) {
+            if (adjList[src][dest] != -1) {
+                weights[src][dest] = newWeight;
+                cout << "Weight updated for edge between " << src << " and " << dest << " to " << newWeight << ".\n";
+            } else {
+                cout << "Edge between " << src << " and " << dest << " does not exist.\n";
+            }
+        } else {
+            cout << "One or both nodes do not exist.\n";
+        }
+    }
+
     void bfs(int startNode) {
-        if (adjList.find(startNode) == adjList.end()) {
+        if (startNode < 0 || startNode >= MAX_NODES || !exists[startNode]) {
             cout << "Start node " << startNode << " does not exist.\n";
             return;
         }
 
-        map<int, bool> visited;
+        bool visited[MAX_NODES] = {false};
         queue<int> q;
 
         q.push(startNode);
@@ -81,25 +88,23 @@ public:
             cout << current << " ";
 
             // Iterate over neighbors
-            for (map<int, int>::iterator it = adjList[current].begin(); it != adjList[current].end(); ++it) {
-                int neighbor = it->first;
-                if (!visited[neighbor]) {
-                    visited[neighbor] = true;
-                    q.push(neighbor);
+            for (int i = 0; i < MAX_NODES; ++i) {
+                if (adjList[current][i] != -1 && !visited[i]) {
+                    visited[i] = true;
+                    q.push(i);
                 }
             }
         }
         cout << endl;
     }
 
-    // Depth-First Search (DFS) Traversal
     void dfs(int startNode) {
-        if (adjList.find(startNode) == adjList.end()) {
+        if (startNode < 0 || startNode >= MAX_NODES || !exists[startNode]) {
             cout << "Start node " << startNode << " does not exist.\n";
             return;
         }
 
-        map<int, bool> visited;
+        bool visited[MAX_NODES] = {false};
         stack<int> s;
 
         s.push(startNode);
@@ -114,10 +119,9 @@ public:
                 visited[current] = true;
 
                 // Push neighbors onto the stack
-                for (map<int, int>::reverse_iterator it = adjList[current].rbegin(); it != adjList[current].rend(); ++it) {
-                    int neighbor = it->first;
-                    if (!visited[neighbor]) {
-                        s.push(neighbor);
+                for (int i = MAX_NODES - 1; i >= 0; --i) {
+                    if (adjList[current][i] != -1 && !visited[i]) {
+                        s.push(i);
                     }
                 }
             }
@@ -125,85 +129,78 @@ public:
         cout << endl;
     }
 
-    // Dijkstra's Algorithm to find the shortest path
-    void dijkstraShortestPath(int startNode, int endNode) {
-        if (adjList.find(startNode) == adjList.end() || adjList.find(endNode) == adjList.end()) {
+    void showShortestPath(int startNode, int endNode) {
+        if (startNode < 0 || startNode >= MAX_NODES || endNode < 0 || endNode >= MAX_NODES || !exists[startNode] || !exists[endNode]) {
             cout << "Start or end node does not exist.\n";
             return;
         }
 
-        // Priority queue for Dijkstra's algorithm (min-heap)
-        priority_queue<pair<int, int>, vector<pair<int, int> >, std::greater<pair<int, int> > > pq; // {distance, node}
-        map<int, int> distances; // node -> shortest distance from startNode
-        map<int, int> previous;  // node -> previous node in the shortest path
-        map<int, bool> visited;
+        int distances[MAX_NODES];
+        int previous[MAX_NODES];
+        bool visited[MAX_NODES] = {false};
 
         // Initialize distances
-        for (map<int, map<int, int> >::iterator it = adjList.begin(); it != adjList.end(); ++it) {
-            distances[it->first] = numeric_limits<int>::max();
+        for (int i = 0; i < MAX_NODES; ++i) {
+            distances[i] = INT_MAX;
+            previous[i] = -1;
         }
         distances[startNode] = 0;
-        pq.push(make_pair(0, startNode));
 
-        while (!pq.empty()) {
-            int currentDist = pq.top().first;
-            int currentNode = pq.top().second;
-            pq.pop();
+        for (int count = 0; count < MAX_NODES - 1; ++count) {
+            int minIndex = -1;
+            int minValue = INT_MAX;
 
-            if (visited[currentNode]) continue;
-            visited[currentNode] = true;
+            // Find the unvisited node with the smallest distance
+            for (int i = 0; i < MAX_NODES; ++i) {
+                if (!visited[i] && distances[i] < minValue) {
+                    minValue = distances[i];
+                    minIndex = i;
+                }
+            }
 
-            // If we've reached the destination, reconstruct the path
-            if (currentNode == endNode) break;
+            if (minIndex == -1) break; // No more reachable nodes
 
-            // Explore neighbors
-            for (map<int, int>::iterator it = adjList[currentNode].begin(); it != adjList[currentNode].end(); ++it) {
-                int neighborNode = it->first;
-                int edgeWeight = it->second;
+            visited[minIndex] = true;
 
-                if (visited[neighborNode]) continue;
-
-                int newDist = currentDist + edgeWeight;
-                if (newDist < distances[neighborNode]) {
-                    distances[neighborNode] = newDist;
-                    previous[neighborNode] = currentNode;
-                    pq.push(make_pair(newDist, neighborNode));
+            // Update distances for neighbors
+            for (int i = 0; i < MAX_NODES; ++i) {
+                if (adjList[minIndex][i] != -1 && !visited[i]) {
+                    int newDist = distances[minIndex] + weights[minIndex][i];
+                    if (newDist < distances[i]) {
+                        distances[i] = newDist;
+                        previous[i] = minIndex;
+                    }
                 }
             }
         }
+
         // Reconstruct the shortest path
-        if (distances[endNode] == numeric_limits<int>::max()) {
+        if (distances[endNode] == INT_MAX) {
             cout << "No path exists from " << startNode << " to " << endNode << ".\n";
             return;
         }
 
-        vector<int> path;
-        int currentNode = endNode;
-        while (currentNode != startNode) {
-            path.push_back(currentNode);
-            currentNode = previous[currentNode];
-        }
-        path.push_back(startNode);
-        reverse(path.begin(), path.end());
-
-        // Print the shortest path
         cout << "Shortest path from " << startNode << " to " << endNode << ": ";
-        for (size_t i = 0; i < path.size(); ++i) {
-            cout << path[i];
-            if (i < path.size() - 1) cout << " -> ";
+        int currentNode = endNode;
+        while (currentNode != -1) {
+            cout << currentNode << " ";
+            currentNode = previous[currentNode];
         }
         cout << "\nTotal distance: " << distances[endNode] << endl;
     }
 
-    // Print the graph
     void printGraph() {
         cout << "Graph:\n";
-        for (map<int, map<int, int> >::iterator it = adjList.begin(); it != adjList.end(); ++it) {
-            cout << it->first << " -> ";
-            for (map<int, int>::iterator jt = it->second.begin(); jt != it->second.end(); ++jt) {
-                cout << "(" << jt->first << ", " << jt->second << ") ";
+        for (int i = 0; i < MAX_NODES; ++i) {
+            if (exists[i]) {
+                cout << i << " -> ";
+                for (int j = 0; j < MAX_NODES; ++j) {
+                    if (adjList[i][j] != -1) {
+                        cout << "(" << j << ", " << weights[i][j] << ") ";
+                    }
+                }
+                cout << endl;
             }
-            cout << endl;
         }
     }
 };
