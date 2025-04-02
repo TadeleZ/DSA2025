@@ -233,7 +233,7 @@ int main() {
                 graph.addNode(node);
                 break;
 
-case 2:
+            case 2:
                 cout << "Enter source node: ";
                 cin >> src;
                 cout << "Enter destination node: ";
