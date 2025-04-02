@@ -92,15 +92,6 @@ The program provides a menu-driven interface for interacting with the graph. Use
 1. Add nodes: `addNode(0)`, `addNode(1)`.
 2. Add edges: `addEdge(0, 1, 5)`.
 3. Perform BFS: `bfs(0)`.
-4. Find shortest path: `showShortestPath(0, 1)`.
-
----
-
-### **Limitations**
-1. **Fixed Size**: The graph is limited to `MAX_NODES` (100 nodes).
-2. **Directed Graph**: Edges are directed; undirected edges must be explicitly added in both directions.
-3. **No Negative Weights**: Dijkstra's algorithm does not support negative edge weights.
-
----
+4. Find shortest path: `showShortestPath(0, 1)`
 
 This implementation is suitable for educational purposes and small-scale graph operations. For larger graphs, consider using adjacency lists instead of adjacency matrices for better memory efficiency.
