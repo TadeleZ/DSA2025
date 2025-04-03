@@ -1,3 +1,18 @@
+
+College of Informatics
+Department of Computer Science
+Datastructure and Algorithm 
+
+
+Group Members’  Names           			            ID                              
+Mulugeta  Addis 				                     	GUR/02030/15	        
+Tadele Endalsey	      		                    GUR/02115/15       
+Tamrat Birhanu                 			           GUR/01963/15 	        
+Abel     Kifle				                          GUR/02225/15              
+Solomon Aemiro           			                 GUR/02089/15 
+
+
+
 ### Documentation for GraphTraversalVisualizer
 
 The `GraphTraversalVisualizer` class is a C++ implementation of a graph data structure with functionalities for adding, deleting, and traversing nodes and edges. It supports both Breadth-First Search (BFS) and Depth-First Search (DFS) traversals, as well as finding the shortest path using Dijkstra's algorithm. Below is a brief overview of its features and methods.
