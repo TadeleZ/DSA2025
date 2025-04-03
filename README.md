@@ -1,3 +1,19 @@
+     College of Informatics
+  Department   of Computer Science
+
+    Data Structures and Algorithm 
+      Graph travrsal visualizer 
+      
+Group members 
+Group Members’  Names           			            ID                              
+Mulugeta  Addis 					                 GUR/02030/15	        
+Tadele Endalsey	      		                  GUR/02115/15       
+Tamrat Birhanu                 			         GUR/01963/15 	        
+Abel  Kifle				                           GUR/02225/15              
+Solomon Aemiro           			               GUR/02089/15 
+
+
+
    Documentation for Graph travrsal visualizer Implementation
 
 This C++ program implements a **GraphTraversalVisualizer** class to represent and manipulate a weighted directed graph. The graph is stored using an adjacency list, where each node maps to its neighbors and the corresponding edge weights. The program provides a menu-driven interface for interacting with the graph, allowing users to add nodes, edges, delete nodes, update edge weights, perform traversals (Breadth-First Search and Depth-First Search), find the shortest path using Dijkstra's algorithm, and print the graph.
